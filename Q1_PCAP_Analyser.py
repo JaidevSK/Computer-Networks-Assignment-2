@@ -1,4 +1,4 @@
-import dpkt
+import dpkt # I am using the dpkt library to parse the pcap files
 import datetime
 import matplotlib.pyplot as plt
 import numpy as np
@@ -179,9 +179,9 @@ def save_results(total_throughput, total_goodput, packet_loss_rate, max_window, 
         f.write(f"Maximum Window Size: {max_window}\n")
 
 if __name__ == "__main__":
-    pcap_dir = "pcaps_captured_trail"
-    output_dir_plots = "plots_obtained_trail"
-    output_dir_results = "results_obtained_trail"
+    pcap_dir = "pcaps_captured_Q1d_5"
+    output_dir_plots = "plots_obtained_Q1d_5"
+    output_dir_results = "results_obtained_Q1d_5"
 
     os.makedirs(output_dir_plots, exist_ok=True)
     os.makedirs(output_dir_results, exist_ok=True)

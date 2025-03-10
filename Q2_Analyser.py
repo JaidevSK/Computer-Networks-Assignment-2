@@ -6,7 +6,6 @@ from collections import defaultdict
 from tqdm import tqdm
 
 def plot_connection_durations(start_times, durations, attack_start_time, attack_end_time, filename, output_dir):
-    """Plots connection durations against start times."""
     if not start_times: 
         print(f"No connection data to plot for {filename}")
         return
@@ -26,10 +25,10 @@ def plot_connection_durations(start_times, durations, attack_start_time, attack_
     plt.savefig(os.path.join(output_dir, plot_filename), dpi=300)
     plt.close()
 
-pcap_file = "Q2_attackMitigated.pcap" # File path to the pcap file
+pcap_file = "Q2_attackMitigated.pcap" # I changed the name of the pcap file to Q2_attack.pcap in order to plot the graph for the attack.
 attack_start_time = 20.0  # Attack start time
 attack_end_time = 120.0   # Attack end time
-output_dir_plots = "connection_duration_plots" # Output directory for plots
+output_dir_plots = "connection_duration_plots" # This was the output directory for the plots
 
 os.makedirs(output_dir_plots, exist_ok=True) # Create output directory if it doesn't exist
 connections = defaultdict(lambda: {'start_time': None, 'end_time': None}) # This will store the connection data
@@ -61,7 +60,7 @@ with open(pcap_file, 'rb') as f: # We will first read the pcap file in binary mo
                 if tcp.flags & dpkt.tcp.TH_RST: # We will check if the packet is a RST packet
                     connections[connection_id]['end_time'] = packet_time
 
-                if tcp.flags & dpkt.tcp.TH_ACK and 'fin_ack_time' in connections[connection_id]: # We will check if the packet is an ACK packet
+                if tcp.flags & dpkt.tcp.TH_ACK and 'fin_ack_time' in connections[connection_id]: # We will check if the packet is an ACK packet that acknowledges the FIN-ACK
                     if packet_time > connections[connection_id]['fin_ack_time']:
                         connections[connection_id]['end_time'] = packet_time
 

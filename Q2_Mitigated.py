@@ -1,7 +1,8 @@
 import subprocess
 import time
 import threading
-
+# This is same as Q2.py. Only, I have done some changes in the configuration of the network to mitigate the attack.
+# Previously, I had set the maximum backlog for the SYN queue to 10000, disabled SYN cookies, and set the number of SYN-ACK retries to 1.
 from mininet.topo import Topo
 from mininet.net import Mininet
 from mininet.log import setLogLevel, info
@@ -47,6 +48,8 @@ h1, h2 = net.get('h1', 'h2')
 server_ip = h2.IP()
 server_port = 8080
 
+# But now, I have changed the configuration of the network to mitigate the attack.
+# I have set the maximum backlog for the SYN queue to 100, enabled SYN cookies, and set the number of SYN-ACK retries to 3.
 h2.cmd('sysctl -w net.ipv4.tcp_max_syn_backlog=100')
 h2.cmd('sysctl -w net.ipv4.tcp_syncookies=1')
 h2.cmd('sysctl -w net.ipv4.tcp_synack_retries=3')
@@ -79,7 +82,7 @@ h1.cmd('pkill tcpdump')
 net.stop()
 
 # References
-# Add references for sysctl
+# https://www.geeksforgeeks.org/systl-command-in-linux/
 # https://nccs.gov.in/public/events/DDoS_Presentation_17092024.pdf
 # https://www.geeksforgeeks.org/practical-uses-of-ncnetcat-command-in-linux/
 # Other References same as Q1
